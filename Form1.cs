@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace tic_tac_toe
 {
@@ -20,12 +21,48 @@ namespace tic_tac_toe
         public bool nyert = false;
         public string gyoztesplayer;
         public string xorcircle;
+        public int xnyert = 0;
+        public int onyert = 0;
+        public int jatszmak = 0;
+        public Point csikkezdet;
+        public Point csikveg;
+
         public void jatekvege()
         {
-            DialogResult dialogResult = MessageBox.Show("\nSzeretnél új játékot kezdeni?", gyoztesplayer + " játékos nyert!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Szeretnél új játékot kezdeni?", gyoztesplayer + " játékos nyert!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                Application.Restart();
+                btn_1.Text = "";
+                btn_2.Text = "";
+                btn_3.Text = "";
+                btn_4.Text = "";
+                btn_5.Text = "";
+                btn_6.Text = "";
+                btn_7.Text = "";
+                btn_8.Text = "";
+                btn_9.Text = "";
+                btn_1.Enabled = true;
+                btn_2.Enabled = true;
+                btn_3.Enabled = true;
+                btn_4.Enabled = true;
+                btn_5.Enabled = true;
+                btn_6.Enabled = true;
+                btn_7.Enabled = true;
+                btn_8.Enabled = true;
+                btn_9.Enabled = true;
+                numberofclicks = 0;
+                if (gyoztesplayer == "X")
+                {
+                    xnyert++;
+                    lbl_x.Text = "X pontjai: " + xnyert;
+                }
+                else
+                {
+                    onyert++;
+                    lbl_o.Text = "O pontjai: " + onyert;
+                }
+                jatszmak++;
+                lbl_jatszmak.Text = "Játszmák száma: " + jatszmak;
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -40,10 +77,14 @@ namespace tic_tac_toe
                 nyert = true;
                 gyoztesplayer = btn_1.Text;
                 jatekvege();
+                csikkezdet.X = 144;
+                csikkezdet.Y = 31;
+                csikveg.X = 216;
+                csikveg.Y = 31;
             }
             else if (btn_4.Text == btn_5.Text && btn_5.Text == btn_6.Text && btn_5.Text != "")
             {
-                nyert=true;
+                nyert =true;
                 gyoztesplayer = btn_4.Text;
                 jatekvege();
             }
@@ -102,7 +143,6 @@ namespace tic_tac_toe
                     break;
             }
             numberofclicks++;
-            label1.Text = "Clicks: " + numberofclicks.ToString();
             return xorcircle;
         }
         private void btn_1_Click(object sender, EventArgs e)
